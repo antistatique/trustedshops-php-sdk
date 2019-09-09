@@ -7,7 +7,7 @@ use SimpleXMLElement;
 use Exception;
 
 /**
- * Super-simple, minimum abstraction TrustedShops API v2.x wrapper, in PHP
+ * Super-simple, minimum abstraction TrustedShops API v2.x wrapper, in PHP.
 
  * TrustedShops API v2.x: https://api.trustedshops.com/
  * This wrapper: https://github.com/antistatique/trustedshops-php-sdk
@@ -86,7 +86,7 @@ class TrustedShops
   private $api_credentials_pass;
 
   /**
-   * Create a new instance
+   * Create a new instance.
    *
    * @param string $api_scoop
    *   The API range of call to be used.
@@ -114,7 +114,7 @@ class TrustedShops
       throw new RuntimeException(sprintf('Unsupported TrustedShops scoop "%s".', $this->api_scoop));
     }
 
-    // Build the concret api endpoint.
+    // Build the concrete api endpoint.
     $this->api_endpoint = str_replace('<scoop>', $this->api_scoop, $this->api_endpoint);
     $this->api_endpoint = str_replace('<version>', $this->api_version, $this->api_endpoint);
 
@@ -122,7 +122,7 @@ class TrustedShops
   }
 
   /**
-   * @return string The url to the API endpoint
+   * @return string The url to the API endpoint.
    */
   public function getApiEndpoint()
   {
@@ -147,7 +147,7 @@ class TrustedShops
    * Was the last request successful?
    *
    * @return bool
-   *    True for success, FALSE for failure
+   *    True for success, FALSE for failure.
    */
   public function success()
   {
@@ -157,7 +157,7 @@ class TrustedShops
   /**
    * Get the last error returned by either the network transport, or by the API.
    *
-   * If something didn't work, this should contain the string describing the problem.
+   * If something didn't work, this contain the string describing the problem.
    *
    * @return  string|bool
    *    Describing the error.
@@ -199,8 +199,8 @@ class TrustedShops
    * @param int $timeout
    *    Timeout limit for request in seconds.
    *
-   * @return array|bool
-   *    Assoc array of API response, decoded from JSON.
+   * @return SimpleXMLElement|bool
+   *    SimpleXMLElement of API response, decoded from XML.
    * @throws \Exception
    */
   public function delete($method, $args = array(), $timeout = self::TIMEOUT)
@@ -214,12 +214,12 @@ class TrustedShops
    * @param string $method
    *    URL of the API request method.
    * @param array $args
-   *    Assoc array of arguments (usually your data)
+   *    Assoc array of arguments (usually your data).
    * @param int $timeout
-   *    Timeout limit for request in seconds
+   *    Timeout limit for request in seconds.
    *
-   * @return array|FALSE
-   *    Assoc array of API response, decoded from JSON
+   * @return SimpleXMLElement|bool
+   *    SimpleXMLElement of API response, decoded from XML.
    *
    * @throws \Exception
    */
@@ -229,17 +229,17 @@ class TrustedShops
   }
 
   /**
-   * Make an HTTP PATCH request - for performing partial updates
+   * Make an HTTP PATCH request - for performing partial updates.
    *
    * @param string $method
    *    URL of the API request method.
    * @param array $args
    *    Assoc array of arguments (usually your data).
    * @param int $timeout
-   *    Timeout limit for request in seconds
+   *    Timeout limit for request in seconds.
    *
-   * @return array|FALSE
-   *    Assoc array of API response, decoded from JSON
+   * @return SimpleXMLElement|bool
+   *    SimpleXMLElement of API response, decoded from XML.
    *
    * @throws \Exception
    */
@@ -249,17 +249,17 @@ class TrustedShops
   }
 
   /**
-   * Make an HTTP POST request - for creating and updating items
+   * Make an HTTP POST request - for creating and updating items.
    *
    * @param string $method
    *    URL of the API request method.
    * @param array $args
-   *    Assoc array of arguments (usually your data)
-   * @param int  $timeout
+   *    Assoc array of arguments (usually your data).
+   * @param int $timeout
    *   Timeout limit for request in seconds.
    *
-   * @return  array|FALSE
-   *    Assoc array of API response, decoded from JSON
+   * @return SimpleXMLElement|bool
+   *    SimpleXMLElement of API response, decoded from XML.
    *
    * @throws \Exception
    */
@@ -278,8 +278,8 @@ class TrustedShops
    * @param int $timeout
    *    Timeout limit for request in seconds
    *
-   * @return  array|FALSE
-   *   Assoc array of API response, decoded from JSON
+   * @return SimpleXMLElement|bool
+   *   SimpleXMLElement of API response, decoded from XML.
    *
    * @throws \Exception
    */
@@ -292,28 +292,21 @@ class TrustedShops
    * Performs the underlying HTTP request. Not very exciting.
    *
    * @param string $http_verb
-   *    The HTTP verb to use: get, post, put, patch, delete
+   *    The HTTP verb to use: get, post, put, patch, delete.
    * @param string $method
-   *    The API method to be called
-   * @param array  $args
-   *    Assoc array of parameters to be passed
-   * @param int    $timeout
+   *    The API method to be called.
+   * @param array $args
+   *    Assoc array of parameters to be passed.
+   * @param int $timeout
    *    Timeout limit for request in seconds.
    *
-   * @return array|FALSE
-   *    Assoc array of decoded result
+   * @return SimpleXMLElement|bool
+   *    SimpleXMLElement of decoded result.
    *
    * @throws \Exception
    */
   private function makeRequest($http_verb, $method, $args = array(), $timeout = self::TIMEOUT)
   {
-    // Ensure for restricted call the authentication has been provided.
-//    if ($this->api_scoop === 'restricted' &&
-//      (!$this->api_credentials_user || !$this->api_credentials_pass)
-//    ) {
-//      throw new RuntimeException("TrustedShops restricted API call required authentification. Please provide your credential using ::setApiCredentials().");
-//    }
-
     $url = $this->api_endpoint . '/' . $method;
 
     $response = $this->prepareStateForRequest($http_verb, $method, $url, $timeout);
@@ -377,8 +370,6 @@ class TrustedShops
         break;
     }
 
-
-
     $responseContent = curl_exec($curl);
     $response['headers'] = curl_getinfo($curl);
     $response = $this->setResponseState($response, $responseContent, $curl);
@@ -391,10 +382,14 @@ class TrustedShops
   }
 
   /**
-   * @param string  $http_verb
-   * @param string  $method
-   * @param string  $url
-   * @param integer $timeout
+   * @param string $http_verb
+   *    The HTTP verb to use: get, post, put, patch, delete.
+   * @param string $method
+   *    The API method to be called.
+   * @param array $args
+   *    Assoc array of parameters to be passed.
+   * @param int $timeout
+   *    Timeout limit for request in seconds.
    *
    * @return array
    */
@@ -405,9 +400,9 @@ class TrustedShops
     $this->request_successful = FALSE;
 
     $this->last_response = array(
-      'headers'     => null, // array of details from curl_getinfo()
-      'httpHeaders' => null, // array of HTTP headers
-      'body'        => null // content of the response
+      'headers'     => null, // array of details from curl_getinfo().
+      'httpHeaders' => null, // array of HTTP headers.
+      'body'        => null // content of the response.
     );
 
     $this->last_request = array(
@@ -455,9 +450,9 @@ class TrustedShops
    * Encode the data and attach it to the request.
    *
    * @param resource $curl
-   *    cURL session handle, used by reference
+   *    cURL session handle, used by reference.
    * @param array $data
-   *    Assoc array of data to attach
+   *    Assoc array of data to attach.
    */
   private function attachRequestPayload(&$curl, $data)
   {
@@ -470,10 +465,10 @@ class TrustedShops
    * Decode the response and format any error messages for debugging.
    *
    * @param array $response
-   *    The response from the curl request
+   *    The response from the curl request.
    *
    * @return SimpleXMLElement|FALSE
-   *    The JSON decoded into an array
+   *    The JSON decoded into an array.
    */
   private function formatResponse($response)
   {
@@ -487,17 +482,19 @@ class TrustedShops
   }
 
   /**
-   * Do post-request formatting and setting state from the response
+   * Do post-request formatting and setting state from the response.
    *
-   * @param array    $response
-   *    The response from the curl request
-   * @param string   $responseContent
-   *    The body of the response from the curl request
+   * @param array $response
+   *    The response from the curl request.
+   * @param string $responseContent
+   *    The body of the response from the curl request.
    * @param resource $curl
-   *    The curl resource
+   *    The curl resource.
    *
    * @return array
-   *    The modified response
+   *    The modified response.
+   *
+   * @throws \Exception
    */
   private function setResponseState($response, $responseContent, $curl)
   {
@@ -521,18 +518,18 @@ class TrustedShops
   }
 
   /**
-   * Check if the response was successful or a failure. If it failed, store the
-   * error.
+   * Check if the response was successful or a failure.
    *
    * @param array $response
-   *    The response from the curl request
+   *    The response from the curl request.
    * @param SimpleXMLElement|FALSE
-   *    $formattedResponse The response body payload from the curl request
+   *    $formattedResponse The response body payload from the curl request.
    * @param int $timeout
    *    The timeout supplied to the curl request.
    *
    * @return bool
-   *    If the request was successful
+   *    If the request was successful.
+   *
    * @throws \Exception
    */
   private function determineSuccess($response, $formattedResponse, $timeout)
