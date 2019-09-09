@@ -10,9 +10,8 @@ if (!\class_exists('Symfony\Component\Dotenv\Dotenv')) {
 
 $env =  __DIR__ . '/../.env';
 
-if (!file_exists($env)) {
-  throw new \RuntimeException('You need to define a .env file in order to run tests.');
+if (file_exists($env)) {
+  $dotenv = new Symfony\Component\Dotenv\Dotenv($env);
+  $dotenv->load( __DIR__ . '/../.env');
 }
 
-$dotenv = new Symfony\Component\Dotenv\Dotenv($env);
-$dotenv->load( __DIR__ . '/../.env');
