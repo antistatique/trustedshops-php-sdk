@@ -9,7 +9,7 @@ use Exception;
 /**
  * @coversDefaultClass Antistatique\TrustedShops\TrustedShops
  */
-class BaseRequestTest extends TestCase
+class BaseTestRequest extends TestCase
 {
   /**
    * The Restricted TrustedShops class to tests public access API endpoints.

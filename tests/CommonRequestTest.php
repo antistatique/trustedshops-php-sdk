@@ -9,7 +9,7 @@ use Exception;
 /**
  * @coversDefaultClass Antistatique\TrustedShops\TrustedShops
  */
-class CommonRequestTest extends BaseRequestTest
+class CommonRequestTest extends BaseTestRequest
 {
 
   /**
