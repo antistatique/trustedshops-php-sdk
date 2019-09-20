@@ -9,16 +9,8 @@ use Exception;
 /**
  * @coversDefaultClass Antistatique\TrustedShops\TrustedShops
  */
-class CommonRequestTest extends TestCase
+class CommonRequestTest extends RequestTestBase
 {
-
-  /**
-   * {@inheritDoc}
-   */
-  public function setup() {
-    $TRUSTEDSHOPS_TSID = getenv('TRUSTEDSHOPS_TSID');
-    $this->assertNotEmpty($TRUSTEDSHOPS_TSID, 'No environment variables! Copy .env.example -> .env and fill out your TrustedShops account details.');
-  }
 
   /**
    * @covers ::determineSuccess
@@ -28,8 +20,7 @@ class CommonRequestTest extends TestCase
   {
     $this->expectException(Exception::class);
     $this->expectExceptionMessage('ERROR 400: TS_ID_INVALID');
-    $ts = new TrustedShops();
-    $ts->get('shops/abc');
+    $this->ts_public->get('shops/abc');
   }
 
   /**
@@ -44,6 +35,15 @@ class CommonRequestTest extends TestCase
 
     $ts = new TrustedShops('restricted', 'v3');
     $this->assertSame('https://api.trustedshops.com/rest/restricted/v3', $ts->getApiEndpoint());
+
+    $ts = new TrustedShops('restricted', 'v3', 'api-qa');
+    $this->assertSame('https://api-qa.trustedshops.com/rest/restricted/v3', $ts->getApiEndpoint());
+
+    $ts = new TrustedShops(NULL, NULL, 'api-qa');
+    $this->assertSame('https://api-qa.trustedshops.com/rest/public/v2', $ts->getApiEndpoint());
+
+    $ts = new TrustedShops('restricted', NULL, 'api-qa');
+    $this->assertSame('https://api-qa.trustedshops.com/rest/restricted/v2', $ts->getApiEndpoint());
   }
 
   /**
@@ -54,11 +54,10 @@ class CommonRequestTest extends TestCase
    */
   public function testInstantiation()
   {
-    $ts = new TrustedShops();
-    $this->assertFalse($ts->success());
-    $this->assertFalse($ts->getLastError());
-    $this->assertSame(array('headers' => null, 'body' => null), $ts->getLastResponse());
-    $this->assertSame(array(), $ts->getLastRequest());
+    $this->assertFalse($this->ts_public->success());
+    $this->assertFalse($this->ts_public->getLastError());
+    $this->assertSame(array('headers' => null, 'body' => null), $this->ts_public->getLastResponse());
+    $this->assertSame(array(), $this->ts_public->getLastRequest());
   }
 
   /**
@@ -71,23 +70,22 @@ class CommonRequestTest extends TestCase
   public function testGetShops()
   {
     $TRUSTEDSHOPS_TSID = getenv('TRUSTEDSHOPS_TSID');
-    $ts = new TrustedShops();
 
     /** @var SimpleXMLElement $response */
-    $response = $ts->get('shops/'.$TRUSTEDSHOPS_TSID);
+    $response = $this->ts_public->get('shops/'.$TRUSTEDSHOPS_TSID);
 
     $this->assertInstanceOf(\SimpleXMLElement::class, $response);
-    $this->assertTrue($ts->success());
-    $this->assertFalse($ts->getLastError());
+    $this->assertTrue($this->ts_public->success());
+    $this->assertFalse($this->ts_public->getLastError());
 
     $this->assertSame(
       ['headers', 'httpHeaders', 'body'],
-      array_keys($ts->getLastResponse())
+      array_keys($this->ts_public->getLastResponse())
     );
 
     $this->assertSame(
       ['method', 'path', 'url', 'body', 'timeout', 'headers'],
-      array_keys($ts->getLastRequest())
+      array_keys($this->ts_public->getLastRequest())
     );
   }
 }
