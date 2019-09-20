@@ -9,7 +9,8 @@ use Exception;
 /**
  * Super-simple, minimum abstraction TrustedShops API v2.x wrapper, in PHP.
 
- * TrustedShops API v2.x: https://api.trustedshops.com/
+ * TrustedShops API: https://api.trustedshops.com/
+ * TrustedShops API QA: https://api-qa.trustedshops.com/
  * This wrapper: https://github.com/antistatique/trustedshops-php-sdk
  *
  */
@@ -34,6 +35,13 @@ class TrustedShops
   ];
 
   /**
+   * The API dc used.
+   *
+   * @var string
+   */
+  private $api_dc = 'api';
+
+  /**
    * The API version used.
    *
    * @var string
@@ -54,7 +62,7 @@ class TrustedShops
    *
    * @var string
    */
-  private $api_endpoint = 'https://api.trustedshops.com/rest/<scoop>/<version>';
+  private $api_endpoint = 'https://<dc>.trustedshops.com/rest/<scoop>/<version>';
 
   /**
    * SSL Verification.
@@ -92,10 +100,12 @@ class TrustedShops
    *   The API range of call to be used.
    * @param string $api_version
    *   The API version you use.
+   * @param string $api_dc
+   *   The API dc of call to be used.
    *
    * @throws \Exception
    */
-  public function __construct($api_scoop = NULL, $api_version = NULL)
+  public function __construct($api_scoop = NULL, $api_version = NULL, $api_dc = NULL)
   {
     if (!function_exists('curl_init') || !function_exists('curl_setopt')) {
       throw new RuntimeException("cURL support is required, but can't be found.");
@@ -109,20 +119,59 @@ class TrustedShops
       $this->api_version = $api_version;
     }
 
+    if ($api_dc !== null) {
+      $this->api_dc = $api_dc;
+    }
+
     // Ensure the scoop is supported by TrustedShops.
     if (!in_array($this->api_scoop, self::ALLOWED_SCOOP)) {
       throw new RuntimeException(sprintf('Unsupported TrustedShops scoop "%s".', $this->api_scoop));
     }
 
     // Build the concrete api endpoint.
-    $this->api_endpoint = str_replace('<scoop>', $this->api_scoop, $this->api_endpoint);
-    $this->api_endpoint = str_replace('<version>', $this->api_version, $this->api_endpoint);
-
+    $this->setEndpoint($this->api_dc, $this->api_scoop, $this->api_version);
     $this->last_response = ['headers' => null, 'body' => null];
   }
 
   /**
-   * @return string The url to the API endpoint.
+   * Set the concrete API endpoint.
+   *
+   * @param string $api_dc
+   *   The API dc of call to be used.
+   * @param string $api_scoop
+   *   The API range of call to be used.
+   * @param string $api_version
+   *   The API version you use.
+   *
+   * @return string
+   *   The endpoint url.
+   */
+  private function setEndpoint($api_dc = NULL, $api_scoop = NULL, $api_version = NULL)
+  {
+    if ($api_dc !== null) {
+      $this->api_dc = $api_dc;
+    }
+
+    if ($api_scoop !== null) {
+      $this->api_scoop = $api_scoop;
+    }
+
+    if ($api_version !== null) {
+      $this->api_version = $api_version;
+    }
+
+    $this->api_endpoint = str_replace('<dc>', $this->api_dc, $this->api_endpoint);
+    $this->api_endpoint = str_replace('<scoop>', $this->api_scoop, $this->api_endpoint);
+    $this->api_endpoint = str_replace('<version>', $this->api_version, $this->api_endpoint);
+
+    return $this->api_endpoint;
+  }
+
+  /**
+   * Get the concrete endpoint API.
+   *
+   * @return string
+   *   The endpoint url.
    */
   public function getApiEndpoint()
   {
