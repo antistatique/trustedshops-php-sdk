@@ -10,7 +10,7 @@ use RuntimeException;
 /**
  * @coversDefaultClass Antistatique\TrustedShops\TrustedShops
  */
-class AdvancedRequestTest extends BaseTestRequest
+class AdvancedRequestTest extends RequestTestBase
 {
 
   /**
