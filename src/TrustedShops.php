@@ -3,7 +3,6 @@
 namespace Antistatique\TrustedShops;
 
 use RuntimeException;
-use SimpleXMLElement;
 use Exception;
 
 /**
@@ -248,8 +247,9 @@ class TrustedShops
    * @param int $timeout
    *    Timeout limit for request in seconds.
    *
-   * @return SimpleXMLElement|bool
-   *    SimpleXMLElement of API response, decoded from XML.
+   * @return array|bool
+   *    A decoded array of result or an boolean on unattended response.
+   *
    * @throws \Exception
    */
   public function delete($method, $args = array(), $timeout = self::TIMEOUT)
@@ -267,8 +267,8 @@ class TrustedShops
    * @param int $timeout
    *    Timeout limit for request in seconds.
    *
-   * @return SimpleXMLElement|bool
-   *    SimpleXMLElement of API response, decoded from XML.
+   * @return array|bool
+   *    A decoded array of result or an boolean on unattended response.
    *
    * @throws \Exception
    */
@@ -287,8 +287,8 @@ class TrustedShops
    * @param int $timeout
    *    Timeout limit for request in seconds.
    *
-   * @return SimpleXMLElement|bool
-   *    SimpleXMLElement of API response, decoded from XML.
+   * @return array|bool
+   *    A decoded array of result or an boolean on unattended response.
    *
    * @throws \Exception
    */
@@ -307,8 +307,8 @@ class TrustedShops
    * @param int $timeout
    *   Timeout limit for request in seconds.
    *
-   * @return SimpleXMLElement|bool
-   *    SimpleXMLElement of API response, decoded from XML.
+   * @return array|bool
+   *    A decoded array of result or an boolean on unattended response.
    *
    * @throws \Exception
    */
@@ -327,8 +327,8 @@ class TrustedShops
    * @param int $timeout
    *    Timeout limit for request in seconds
    *
-   * @return SimpleXMLElement|bool
-   *   SimpleXMLElement of API response, decoded from XML.
+   * @return array|bool
+   *    A decoded array of result or an boolean on unattended response.
    *
    * @throws \Exception
    */
@@ -349,8 +349,8 @@ class TrustedShops
    * @param int $timeout
    *    Timeout limit for request in seconds.
    *
-   * @return SimpleXMLElement|bool
-   *    SimpleXMLElement of decoded result.
+   * @return array|bool
+   *    A decoded array of result or an boolean on unattended response.
    *
    * @throws \Exception
    */
@@ -361,8 +361,8 @@ class TrustedShops
     $response = $this->prepareStateForRequest($http_verb, $method, $url, $timeout);
 
     $httpHeader = array(
-      'Accept: application/xml',
-      'Content-Type: application/xml',
+      'Accept: application/json',
+      'Content-Type: application/json',
       // TrustedShops needs the X-Requested-With header to works properly.
       'X-Requested-With: XMLHttpRequest'
     );
@@ -426,8 +426,8 @@ class TrustedShops
 
     curl_close($curl);
 
-    $isSuccess = $this->determineSuccess($response, $formattedResponse, $timeout);
-    return $formattedResponse instanceof SimpleXMLElement ? $formattedResponse : $isSuccess;
+    $isSuccess = $this->determineSuccess($response, $formattedResponse['response'], $timeout);
+    return is_array($formattedResponse['response']) ? $formattedResponse['response'] : $isSuccess;
   }
 
   /**
@@ -516,8 +516,8 @@ class TrustedShops
    * @param array $response
    *    The response from the curl request.
    *
-   * @return SimpleXMLElement|FALSE
-   *    The JSON decoded into an array.
+   * @return array|FALSE
+   *    A decoded array from JSON response.
    */
   private function formatResponse($response)
   {
@@ -527,7 +527,9 @@ class TrustedShops
       return FALSE;
     }
 
-    return new SimpleXMLElement($response['body']);
+    // Return the decoded response from JSON when reponse is a valid json.
+    // Will return FALSE otherwise.
+    return ($result = json_decode($response['body'], true)) ? $result : FALSE;
   }
 
   /**
@@ -571,8 +573,8 @@ class TrustedShops
    *
    * @param array $response
    *    The response from the curl request.
-   * @param SimpleXMLElement|FALSE
-   *    $formattedResponse The response body payload from the curl request.
+   * @param array|FALSE $formattedResponse
+   *    The response body payload from the curl request.
    * @param int $timeout
    *    The timeout supplied to the curl request.
    *
@@ -590,8 +592,8 @@ class TrustedShops
       return true;
     }
 
-    if (isset($formattedResponse->message)) {
-      $this->last_error = sprintf('%s %d: %s', $formattedResponse->status, $formattedResponse->code, $formattedResponse->message);
+    if (isset($formattedResponse['message'])) {
+      $this->last_error = sprintf('%s %d: %s', $formattedResponse['status'], $formattedResponse['code'], $formattedResponse['message']);
       throw new Exception($this->last_error);
     }
 
@@ -608,9 +610,9 @@ class TrustedShops
    * Find the HTTP status code from the headers or API response body
    *
    * @param array $response
-   *    The response from the curl request
-   * @param SimpleXMLElement|FALSE $formattedResponse
-   *    The response body payload from the curl request
+   *    The response from the curl request.
+   * @param array|FALSE $formattedResponse
+   *    The decoded response body payload from the curl request.
    *
    * @return int
    *    HTTP status code
@@ -621,8 +623,8 @@ class TrustedShops
       return (int)$response['headers']['http_code'];
     }
 
-    if (!empty($response['body']) && isset($formattedResponse->code)) {
-      return (int)$formattedResponse->code;
+    if (!empty($response['body']) && isset($formattedResponse['code'])) {
+      return (int)$formattedResponse['code'];
     }
 
     return 418;

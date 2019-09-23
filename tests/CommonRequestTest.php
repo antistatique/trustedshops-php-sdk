@@ -71,10 +71,10 @@ class CommonRequestTest extends RequestTestBase
   {
     $TRUSTEDSHOPS_TSID = getenv('TRUSTEDSHOPS_TSID');
 
-    /** @var SimpleXMLElement $response */
+    /** @var array $response */
     $response = $this->ts_public->get('shops/'.$TRUSTEDSHOPS_TSID);
 
-    $this->assertInstanceOf(\SimpleXMLElement::class, $response);
+    $this->assertInternalType('array', $response);
     $this->assertTrue($this->ts_public->success());
     $this->assertFalse($this->ts_public->getLastError());
 
