@@ -37,6 +37,7 @@ class AdvancedRequestTest extends RequestTestBase
   }
 
   /**
+   * @covers ::setApiCredentials
    * @covers ::determineSuccess
    * @covers ::findHTTPStatus
    */
@@ -50,6 +51,7 @@ class AdvancedRequestTest extends RequestTestBase
   }
 
   /**
+   * @covers ::setApiCredentials
    * @covers ::determineSuccess
    * @covers ::findHTTPStatus
    */
@@ -64,11 +66,19 @@ class AdvancedRequestTest extends RequestTestBase
   }
 
   /**
+   * @covers ::get
+   * @covers ::makeRequest
+   * @covers ::setApiCredentials
    * @covers ::determineSuccess
    * @covers ::findHTTPStatus
    * @covers ::getLastError
    * @covers ::getLastResponse
    * @covers ::getLastRequest
+   * @covers ::setResponseState
+   * @covers ::getHeadersAsArray
+   * @covers ::formatResponse
+   * @covers ::attachRequestPayload
+   * @covers ::prepareStateForRequest
    */
   public function testShopsQualityComplaints()
   {

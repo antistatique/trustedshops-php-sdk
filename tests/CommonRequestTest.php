@@ -25,6 +25,8 @@ class CommonRequestTest extends RequestTestBase
 
   /**
    * @covers ::__construct
+   * @covers ::setEndpoint
+   * @covers ::getApiEndpoint
    */
   public function testConstructor() {
     $ts = new TrustedShops();
@@ -51,6 +53,9 @@ class CommonRequestTest extends RequestTestBase
    * @covers ::getLastError
    * @covers ::getLastResponse
    * @covers ::getLastRequest
+   * @covers ::setResponseState
+   * @covers ::getHeadersAsArray
+   * @covers ::prepareStateForRequest
    */
   public function testInstantiation()
   {
@@ -61,11 +66,17 @@ class CommonRequestTest extends RequestTestBase
   }
 
   /**
+   * @covers ::get
+   * @covers ::makeRequest
    * @covers ::determineSuccess
    * @covers ::findHTTPStatus
    * @covers ::getLastError
    * @covers ::getLastResponse
    * @covers ::getLastRequest
+   * @covers ::setResponseState
+   * @covers ::getHeadersAsArray
+   * @covers ::attachRequestPayload
+   * @covers ::prepareStateForRequest
    */
   public function testGetShops()
   {
