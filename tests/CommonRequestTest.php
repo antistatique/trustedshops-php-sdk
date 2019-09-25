@@ -24,7 +24,7 @@ class CommonRequestTest extends RequestTestBase
   }
 
   /**
-   * @covers ::construct
+   * @covers ::__construct
    */
   public function testConstructor() {
     $ts = new TrustedShops();
