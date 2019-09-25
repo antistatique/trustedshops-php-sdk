@@ -78,10 +78,10 @@ class AdvancedRequestTest extends RequestTestBase
 
     $this->ts_restricted->setApiCredentials( $TRUSTEDSHOPS_LOGIN, $TRUSTEDSHOPS_PASS);
 
-    /** @var SimpleXMLElement $response */
+    /** @var array $response */
     $response = $this->ts_restricted->get('shops/'.$TRUSTEDSHOPS_TSID.'/quality/complaints');
 
-    $this->assertInstanceOf(\SimpleXMLElement::class, $response);
+    $this->assertInternalType('array', $response);
     $this->assertTrue($this->ts_restricted->success());
     $this->assertFalse($this->ts_restricted->getLastError());
 
@@ -95,12 +95,12 @@ class AdvancedRequestTest extends RequestTestBase
       array_keys($this->ts_restricted->getLastRequest())
     );
 
-    $this->assertInternalType('string', $response->data->shop->url->__toString());
-    $this->assertEquals('demoshop.trustedshops.com/fr/home', $response->data->shop->url->__toString());
+    $this->assertInternalType('string', $response['data']['shop']['url']);
+    $this->assertEquals('demoshop.trustedshops.com/fr/home', $response['data']['shop']['url']);
 
     $this->assertSame(
       ['totalComplaintCount', 'activeComplaintCount'],
-      array_keys((array)$response->data->shop->qualityIndicators->complaintIndicator)
+      array_keys((array)$response['data']['shop']['qualityIndicators']['complaintIndicator'])
     );
 
   }
