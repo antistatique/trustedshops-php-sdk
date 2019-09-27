@@ -25,25 +25,41 @@ class CommonRequestTest extends RequestTestBase
 
   /**
    * @covers ::construct
+   * @covers ::setEndpoint
+   *
+   * @dataProvider providerSetEndpoint
    */
-  public function testConstructor() {
+  public function testConstructor($dc, $scoop, $version, $expected) {
+    $ts = new TrustedShops($scoop, $version, $dc);
+    $this->assertSame($expected, $ts->getApiEndpoint());
+  }
+
+  /**
+   * @covers ::setEndpoint
+   *
+   * @dataProvider providerSetEndpoint
+   */
+  public function testSetEndpoint($dc, $scoop, $version, $expected) {
     $ts = new TrustedShops();
-    $this->assertSame('https://api.trustedshops.com/rest/public/v2', $ts->getApiEndpoint());
+    $ts->setEndpoint($dc, $scoop, $version);
+    $this->assertSame($expected, $ts->getApiEndpoint());
+  }
 
-    $ts = new TrustedShops('restricted');
-    $this->assertSame('https://api.trustedshops.com/rest/restricted/v2', $ts->getApiEndpoint());
-
-    $ts = new TrustedShops('restricted', 'v3');
-    $this->assertSame('https://api.trustedshops.com/rest/restricted/v3', $ts->getApiEndpoint());
-
-    $ts = new TrustedShops('restricted', 'v3', 'api-qa');
-    $this->assertSame('https://api-qa.trustedshops.com/rest/restricted/v3', $ts->getApiEndpoint());
-
-    $ts = new TrustedShops(NULL, NULL, 'api-qa');
-    $this->assertSame('https://api-qa.trustedshops.com/rest/public/v2', $ts->getApiEndpoint());
-
-    $ts = new TrustedShops('restricted', NULL, 'api-qa');
-    $this->assertSame('https://api-qa.trustedshops.com/rest/restricted/v2', $ts->getApiEndpoint());
+  /**
+   * Dataprovider of :testSetEndpoint
+   *
+   * @return array
+   *   Variation of endpoint.
+   */
+  public function providerSetEndpoint() {
+    return [
+      [NULL, NULL, NULL, 'https://api.trustedshops.com/rest/public/v2'],
+      [NULL, 'restricted', NULL, 'https://api.trustedshops.com/rest/restricted/v2'],
+      [NULL, 'restricted', 'v3', 'https://api.trustedshops.com/rest/restricted/v3'],
+      ['api-qa', 'restricted', 'v3', 'https://api-qa.trustedshops.com/rest/restricted/v3'],
+      ['api-qa', NULL, NULL, 'https://api-qa.trustedshops.com/rest/public/v2'],
+      ['api-qa', 'restricted', NULL, 'https://api-qa.trustedshops.com/rest/restricted/v2'],
+    ];
   }
 
   /**
