@@ -9,7 +9,9 @@ Requires PHP 7.0+. Abstraction is for chimps.
 
 [![Build Status](https://travis-ci.org/antistatique/trustedshops-php-sdk.svg?branch=master)](https://travis-ci.org/antistatique/trustedshops-php-sdk)
 [![StyleCI](https://github.styleci.io/repos/207270598/shield?branch=master)](https://github.styleci.io/repos/207270598)
+[![Coverage Status](https://coveralls.io/repos/github/antistatique/trustedshops-php-sdk/badge.svg?branch=master)](https://coveralls.io/github/antistatique/trustedshops-php-sdk?branch=master)
 [![Packagist](https://img.shields.io/packagist/dt/antistatique/trustedshops-php-sdk.svg?maxAge=2592000)](https://packagist.org/packages/antistatique/trustedshops-php-sdk)
+[![License](https://poser.pugx.org/antistatique/trustedshops-php-sdk/license)](https://packagist.org/packages/antistatique/trustedshops-php-sdk)
 
 Getting started
 ------------
