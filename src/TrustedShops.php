@@ -34,6 +34,13 @@ class TrustedShops
   ];
 
   /**
+   * The original URL for public & restricted API call.
+   *
+   * @var string
+   */
+  const BASE_URL = 'https://<dc>.trustedshops.com/rest/<scoop>/<version>';
+
+  /**
    * The API dc used.
    *
    * @var string
@@ -61,7 +68,7 @@ class TrustedShops
    *
    * @var string
    */
-  private $api_endpoint = 'https://<dc>.trustedshops.com/rest/<scoop>/<version>';
+  private $api_endpoint = '';
 
   /**
    * SSL Verification.
@@ -145,7 +152,7 @@ class TrustedShops
    * @return string
    *   The endpoint url.
    */
-  private function setEndpoint($api_dc = NULL, $api_scoop = NULL, $api_version = NULL)
+  public function setEndpoint($api_dc = NULL, $api_scoop = NULL, $api_version = NULL)
   {
     if ($api_dc !== null) {
       $this->api_dc = $api_dc;
@@ -158,6 +165,9 @@ class TrustedShops
     if ($api_version !== null) {
       $this->api_version = $api_version;
     }
+
+    // Reset the API endpoint to the original value.
+    $this->api_endpoint = self::BASE_URL;
 
     $this->api_endpoint = str_replace('<dc>', $this->api_dc, $this->api_endpoint);
     $this->api_endpoint = str_replace('<scoop>', $this->api_scoop, $this->api_endpoint);
