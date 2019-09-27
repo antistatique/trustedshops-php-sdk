@@ -24,8 +24,9 @@ class CommonRequestTest extends RequestTestBase
   }
 
   /**
-   * @covers ::construct
+   * @covers ::__construct
    * @covers ::setEndpoint
+   * @covers ::getApiEndpoint
    *
    * @dataProvider providerSetEndpoint
    */
@@ -36,6 +37,7 @@ class CommonRequestTest extends RequestTestBase
 
   /**
    * @covers ::setEndpoint
+   * @covers ::getApiEndpoint
    *
    * @dataProvider providerSetEndpoint
    */
@@ -67,6 +69,9 @@ class CommonRequestTest extends RequestTestBase
    * @covers ::getLastError
    * @covers ::getLastResponse
    * @covers ::getLastRequest
+   * @covers ::setResponseState
+   * @covers ::getHeadersAsArray
+   * @covers ::prepareStateForRequest
    */
   public function testInstantiation()
   {
@@ -77,11 +82,17 @@ class CommonRequestTest extends RequestTestBase
   }
 
   /**
+   * @covers ::get
+   * @covers ::makeRequest
    * @covers ::determineSuccess
    * @covers ::findHTTPStatus
    * @covers ::getLastError
    * @covers ::getLastResponse
    * @covers ::getLastRequest
+   * @covers ::setResponseState
+   * @covers ::getHeadersAsArray
+   * @covers ::attachRequestPayload
+   * @covers ::prepareStateForRequest
    */
   public function testGetShops()
   {
