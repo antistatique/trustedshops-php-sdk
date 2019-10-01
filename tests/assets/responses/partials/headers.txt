@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Mon, 30 Sep 2019 14:09:23 GMT
+Server: Apache
+Access-Control-Allow-Origin: *
+Content-Encoding: gzip
+Connection: close
+Transfer-Encoding: chunked
+Content-Type: application/json
