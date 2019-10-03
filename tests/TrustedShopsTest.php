@@ -374,11 +374,10 @@ class TrustedShopsTest extends RequestTestBase {
       ->willReturn(TRUE);
 
     $curl_exec_mock = $this->getFunctionMock('Antistatique\TrustedShops', 'curl_exec');
-    $curl_exec_mock->expects($this->once())
-      ->willReturn($body_txt);
+    $curl_exec_mock->expects($this->any())->willReturn($body_txt);
 
     $curl_getinfo_mock = $this->getFunctionMock('Antistatique\TrustedShops', 'curl_getinfo');
-    $curl_getinfo_mock->expects($this->once())->willReturn($response['headers']);
+    $curl_getinfo_mock->expects($this->any())->willReturn($response['headers']);
 
     $result = $this->callPrivateMethod($ts_mock, 'makeRequest', [
       'get',
