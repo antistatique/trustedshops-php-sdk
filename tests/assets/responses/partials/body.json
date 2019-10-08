@@ -1,0 +1,19 @@
+{
+  "response":{
+    "code":200,
+    "data":{
+      "shop":{
+        "tsId":"UNSMOKGONMYBWZOXNLVRKUQMUHJAYFGCA",
+        "url":"demoshop.trustedshops.com/fr/home",
+        "name":"Trusted Shops DemoShop FR",
+        "languageISO2":"fr",
+        "targetMarketISO3":"FRA"
+      }
+    },
+    "message":"SUCCESS",
+    "responseInfo":{
+      "apiVersion":"2.4.18"
+    },
+    "status":"SUCCESS"
+  }
+}

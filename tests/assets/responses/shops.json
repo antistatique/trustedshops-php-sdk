@@ -1,0 +1,35 @@
+{
+  "headers":{
+    "url":"https://api-qa.trustedshops.com/rest/public/v2/shops/UNSMOKGONMYBWZOXNLVRKUQMUHJAYFGCA?",
+    "content_type":"application/json",
+    "http_code":200,
+    "header_size":197,
+    "request_size":326,
+    "filetime":-1,
+    "ssl_verify_result":0,
+    "redirect_count":0,
+    "total_time":0.281616,
+    "namelookup_time":0.019145,
+    "connect_time":0.026572,
+    "pretransfer_time":0.182858,
+    "size_upload":0,
+    "size_download":229,
+    "speed_download":814,
+    "speed_upload":0,
+    "download_content_length":-1,
+    "upload_content_length":-1,
+    "starttransfer_time":0.281442,
+    "redirect_time":0,
+    "redirect_url":0,
+    "primary_ip":"127.0.0.2",
+    "certinfo":[
+
+    ],
+    "primary_port":443,
+    "local_ip":"127.0.0.1",
+    "local_port":59131,
+    "request_header":"GET /rest/public/v2/shops/UNSMOKGONMYBWZOXNLVRKUQMUHJAYFGCA? HTTP/1.1\nHost: api-qa.trustedshops.com\nUser-Agent: Antistatique/TrustedShops-PHP-SDK (github.com/antistatique/trustedshops-php-sdk)\nAccept-Encoding: deflate, gzip, br\nAccept: application/json\nContent-Type: application/json\nX-Requested-With: XMLHttpRequest"
+  },
+  "httpHeaders":null,
+  "body":null
+}
