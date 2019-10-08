@@ -364,7 +364,7 @@ class TrustedShops
    *
    * @throws \Exception
    */
-  private function makeRequest($http_verb, $method, $args = array(), $timeout = self::TIMEOUT)
+  protected function makeRequest($http_verb, $method, $args = array(), $timeout = self::TIMEOUT)
   {
     $url = $this->api_endpoint . '/' . $method;
 
@@ -429,9 +429,9 @@ class TrustedShops
         break;
     }
 
-    $responseContent = curl_exec($curl);
+    $response_content = curl_exec($curl);
     $response['headers'] = curl_getinfo($curl);
-    $response = $this->setResponseState($response, $responseContent, $curl);
+    $response = $this->setResponseState($response, $response_content, $curl);
     $formattedResponse = $this->formatResponse($response);
 
     curl_close($curl);
@@ -452,7 +452,7 @@ class TrustedShops
    *
    * @return array
    */
-  private function prepareStateForRequest($http_verb, $method, $url, $timeout)
+  protected function prepareStateForRequest($http_verb, $method, $url, $timeout)
   {
     $this->last_error = '';
 
@@ -484,11 +484,11 @@ class TrustedShops
    * @return array
    *   The parsed headers.
    */
-  private function getHeadersAsArray($headersAsString)
+  protected function getHeadersAsArray($headersAsString)
   {
     $headers = array();
 
-    foreach (explode("\r\n", $headersAsString) as $i => $line) {
+    foreach (explode(PHP_EOL, $headersAsString) as $i => $line) {
       if (preg_match('/HTTP\/[1-2]/', substr($line, 0, 7)) === 1) { // http code
         continue;
       }
@@ -513,7 +513,7 @@ class TrustedShops
    * @param array $data
    *    Assoc array of data to attach.
    */
-  private function attachRequestPayload(&$curl, $data)
+  protected function attachRequestPayload(&$curl, $data)
   {
     $encoded = json_encode($data);
     $this->last_request['body'] = $encoded;
@@ -529,7 +529,7 @@ class TrustedShops
    * @return array|FALSE
    *    A decoded array from JSON response.
    */
-  private function formatResponse($response)
+  protected function formatResponse($response)
   {
     $this->last_response = $response;
 
@@ -547,7 +547,7 @@ class TrustedShops
    *
    * @param array $response
    *    The response from the curl request.
-   * @param string $responseContent
+   * @param string $response_content
    *    The body of the response from the curl request.
    * @param resource $curl
    *    The curl resource.
@@ -557,18 +557,16 @@ class TrustedShops
    *
    * @throws \Exception
    */
-  private function setResponseState($response, $responseContent, $curl)
+  protected function setResponseState($response, $response_content, $curl)
   {
-    if ($responseContent === FALSE) {
+    if ($response_content === FALSE) {
       $this->last_error = curl_error($curl);
       throw new Exception($this->last_error);
     } else {
-
       $headerSize = $response['headers']['header_size'];
 
-      $response['httpHeaders'] = $this->getHeadersAsArray(substr($responseContent, 0, $headerSize));
-      $response['body'] = substr($responseContent, $headerSize);
-
+      $response['httpHeaders'] = $this->getHeadersAsArray(substr($response_content, 0, $headerSize));
+      $response['body'] = substr($response_content, $headerSize);
 
       if (isset($response['headers']['request_header'])) {
         $this->last_request['headers'] = $response['headers']['request_header'];
@@ -593,7 +591,7 @@ class TrustedShops
    *
    * @throws \Exception
    */
-  private function determineSuccess($response, $formattedResponse, $timeout)
+  protected function determineSuccess($response, $formattedResponse, $timeout)
   {
     $status = $this->findHTTPStatus($response, $formattedResponse);
 
@@ -627,7 +625,7 @@ class TrustedShops
    * @return int
    *    HTTP status code
    */
-  private function findHTTPStatus($response, $formattedResponse)
+  protected function findHTTPStatus($response, $formattedResponse)
   {
     if (!empty($response['headers']) && isset($response['headers']['http_code'])) {
       return (int)$response['headers']['http_code'];

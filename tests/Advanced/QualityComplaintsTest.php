@@ -1,16 +1,14 @@
 <?php
 
-namespace Antistatique\TrustedShops\Tests;
+namespace Antistatique\TrustedShops\Tests\Advanced;
 
-use Antistatique\TrustedShops\TrustedShops;
-use PHPUnit\Framework\TestCase;
+use Antistatique\TrustedShops\Tests\RequestTestBase;
 use Exception;
-use RuntimeException;
 
 /**
  * @coversDefaultClass Antistatique\TrustedShops\TrustedShops
  */
-class AdvancedRequestTest extends RequestTestBase
+class QualityComplaintsTest extends RequestTestBase
 {
 
   /**
@@ -24,16 +22,6 @@ class AdvancedRequestTest extends RequestTestBase
 
     $this->assertNotEmpty($TRUSTEDSHOPS_LOGIN, 'No environment variables! Copy .env.example -> .env and fill out your TrustedShops account details.');
     $this->assertNotEmpty($TRUSTEDSHOPS_PASS, 'No environment variables! Copy .env.example -> .env and fill out your TrustedShops account details.');
-  }
-
-  /**
-   * @covers ::__construct
-   */
-  public function testUnsupportedScoop()
-  {
-    $this->expectException(RuntimeException::class);
-    $this->expectExceptionMessage('Unsupported TrustedShops scoop "foo".');
-    new TrustedShops('foo');
   }
 
   /**
