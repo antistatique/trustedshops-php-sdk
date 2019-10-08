@@ -1,6 +1,11 @@
 CHANGELOG
 ---------
 
+## 1.0.0 (2019-10-08)
+ - Initial release
+    - Refactoring of testing strategy
+    - Improve code coverage to ensure stability and sustainability
+
 ## 0.0.1-alpha (2019-09-27)
  - Alpha release
     - Allow GET, POST, PUT, PATCH & DELETE operation on the TrustedShops API
