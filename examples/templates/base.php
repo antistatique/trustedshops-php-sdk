@@ -29,7 +29,7 @@ function pageHeader($title)
   <html>
   <head>
     <title>" . $title . "</title>
-    <link href='styles/style.css' rel='stylesheet' type='text/css' />
+    <link href='/styles/style.css' rel='stylesheet' type='text/css' />
   </head>
   <body>\n";
   if ($_SERVER['PHP_SELF'] != "/index.php") {
@@ -57,4 +57,14 @@ function pageFooter($file = null)
   $ret .= "</html>";
 
   return $ret;
+}
+
+function pageContent($response) {
+  echo "<pre class='code'>", var_dump($response), "</pre>";
+}
+
+function renderResponse($title, $response) {
+  echo pageHeader($title);
+  echo pageContent($response);
+  echo pageFooter();
 }
