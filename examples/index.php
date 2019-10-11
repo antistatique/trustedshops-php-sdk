@@ -24,8 +24,8 @@ include_once "templates/base.php";
 <ul>
   <li><a href="common/shops/get_shops_by_id.php">Get Shops from a TrustedShopsID Example</a></li>
   <li><a href="common/shops/get_shops_by_url.php">Get Shops from an URL Example</a></li>
-  <li><a href="common/reviews/get_reviews.php">Get Reviews for a shop from a TrustedShops ID</a></li>
-  <li><a href="common/quality_indicators/get_quality_indicators.php">Get Quality Indicators for a shop from a TrustedShops ID</a></li>
+  <li><a href="common/reviews/get_reviews.php">Get Reviews from a TrustedShops ID</a></li>
+  <li><a href="common/quality_indicators/get_quality_indicators.php">Get Quality Indicators from a TrustedShops ID</a></li>
 </ul>
 
 <h2>Restricted API</h2>
