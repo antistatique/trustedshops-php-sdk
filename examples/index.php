@@ -40,6 +40,7 @@ include_once "templates/base.php";
   <li><a href="restricted/quality_indicators/get_quality_reviews.php">Get Quality Indicators Reviews from a TrustedShopsID Example</a></li>
   <li><a href="restricted/benchmarks/get_benchmarks.php">Get Benchmarks from a TrustedShopsID Example</a></li>
   <li><a href="restricted/retailer_shops/get_retailers.php">Get Retailers from a TrustedShopsID Example</a></li>
+  <li><a href="restricted/reviews_collector/post_review_collector.php">Post Review Collector from a TrustedShops ID Example</a></li>
 </ul>
 
 <?= pageFooter(); ?>
