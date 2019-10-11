@@ -33,6 +33,8 @@ include_once "templates/base.php";
 <ul>
   <li><a href="restricted/shops/get_shops.php">Get Shops from a TrustedShopsID Example</a></li>
   <li><a href="restricted/reviews/get_reviews.php">Get Reviews from a TrustedShopsID Example</a></li>
+  <li><a href="restricted/reviews/post_reviews_trigger.php">Trigger a Review from a TrustedShopsID Example</a></li>
+  <li><a href="restricted/retailer_shops/get_retailers.php">Get Retailers from a TrustedShopsID Example</a></li>
   <li><a href="restricted/quality_indicators/get_quality.php">Get Quality Indicators from a TrustedShopsID Example</a></li>
   <li><a href="restricted/quality_indicators/get_quality_complaints.php">Get Quality Indicators Complaints from a TrustedShopsID Example</a></li>
   <li><a href="restricted/quality_indicators/get_quality_reviews.php">Get Quality Indicators Reviews from a TrustedShopsID Example</a></li>
