@@ -25,6 +25,16 @@ composer require antistatique/trustedshops-php-sdk
 Examples
 --------
 
+See the `examples/` directory for examples of the key client features. You can view them in your browser by running the php built-in web server.
+
+```bash
+php -S localhost:8000 -t examples/
+```
+
+And then browsing to the host and port you specified (in the above example, `http://localhost:8000`).
+
+### Basic Example
+
 Start by `use`-ing the class and creating an instance with your API key
 
 ```php
