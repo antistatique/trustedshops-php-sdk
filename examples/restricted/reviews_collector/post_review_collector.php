@@ -14,7 +14,6 @@ $envs = getEnvVariables();
 $now = \DateTime::createFromFormat('U', time());
 $now->setTimezone(new \DateTimeZone('UTC'));
 
-
 $review_collector = $ts_restricted->post('shops/'.$envs['TRUSTEDSHOPS_ID'].'/reviewcollector', [
   "reviewCollectorRequest" => [
     "reviewCollectorReviewRequests" => [

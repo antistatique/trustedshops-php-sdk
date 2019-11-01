@@ -43,7 +43,7 @@ $review = $ts_restricted->post('shops/'.$envs['TRUSTEDSHOPS_ID'].'/reviews/trigg
       ],
     ],
   ],
-])
+]);
 
 ?>
 
