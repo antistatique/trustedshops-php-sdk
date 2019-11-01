@@ -10,15 +10,19 @@ Note that everything is done from the root of the project and not from the examp
 $ composer install
 ```
 
-2. Copy the .env.example file in the examples folder as .env
+2. Copy the `.env.example` file in the examples folder as `.env`
 
-3. Fill the .env file with correct information
+```bash
+$ cp examples/.env.example examples/.env
+```
 
-    - TRUSTEDSHOPS_TSID is your TrustedShops ID
-    - TRUSTEDSHOPS_LOGIN is your username for TrustedShops
-    - TRUSTEDSHOPS_PASS is the password tied to your username
+3. Fill the `.env` file with correct information
 
-4. Run the PHP built-in web server. Supply the -t option to this directory:
+    - `TRUSTEDSHOPS_TSID` is your TrustedShops ID
+    - `TRUSTEDSHOPS_LOGIN` is your username for TrustedShops
+    - `TRUSTEDSHOPS_PASS` is the password tied to your username
+
+4. Run the PHP built-in web server. Supply the `-t` option to this directory:
 
 ```bash
 $ php -s localhost:8000 -t examples/
