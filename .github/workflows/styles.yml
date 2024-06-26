@@ -26,7 +26,6 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
       - uses: actions/checkout@v4
       - run: composer install --prefer-dist
@@ -39,21 +38,19 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
       - uses: actions/checkout@v4
       - run: composer install --prefer-dist
       - run: ./vendor/bin/psalm --output-format=github
 
-#  security-checker:
-#    name: security-checker
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Setup PHP
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: '7.4'
-#          tools: composer:v2
-#      - uses: actions/checkout@v4
-#      - run: composer install --prefer-dist
-#      - uses: symfonycorp/security-checker-action@v3
+  security-checker:
+    name: security-checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          tools: composer:v2
+      - uses: actions/checkout@v4
+      - run: composer install --prefer-dist
+      - uses: symfonycorp/security-checker-action@v3

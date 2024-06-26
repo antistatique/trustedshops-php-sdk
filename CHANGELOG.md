@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add coveralls phpunit coverage upload
 - add coverage on cURL availability tests
 - add support for PHP 8.0, 8.1 & 8.2
+- add security-checker on Github Actions
 
 ### Security
 - ugprade phpunit/phpunit 7.x => 8.x
