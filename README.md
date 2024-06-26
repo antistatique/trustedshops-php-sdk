@@ -5,8 +5,6 @@ Super-simple, minimum abstraction TrustedShops API v2.x wrapper, in PHP.
 
 I hate complex wrappers. This lets you get from the TrustedShops API docs to the code as directly as possible.
 
-Requires PHP 7.0+. Abstraction is for chimps.
-
 [![Build](https://github.com/antistatique/trustedshops-php-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/antistatique/trustedshops-php-sdk/actions/workflows/tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/antistatique/trustedshops-php-sdk/badge.svg?branch=master)](https://coveralls.io/github/antistatique/trustedshops-php-sdk?branch=master)
 [![Packagist](https://img.shields.io/packagist/dt/antistatique/trustedshops-php-sdk.svg?maxAge=2592000)](https://packagist.org/packages/antistatique/trustedshops-php-sdk)
