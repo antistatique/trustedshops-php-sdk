@@ -1,8 +1,8 @@
 <?php
 /**
- * Example to get Benchmarks from a TrustedShopsID
+ * Example to get Benchmarks from a TrustedShopsID.
  */
-include_once "../base.php";
+include_once '../base.php';
 
 /********************************
  Create the Trustedshops object
@@ -18,4 +18,4 @@ $benchmarks = $ts_restricted->get('shops/benchmarks', ['tsId' => $envs['TRUSTEDS
 
 ?>
 
-<?= renderResponse('Get Shops Benchmarks from a TrustedShops ID', $benchmarks); ?>
+<?php echo renderResponse('Get Shops Benchmarks from a TrustedShops ID', $benchmarks); ?>

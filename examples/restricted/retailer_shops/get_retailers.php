@@ -1,8 +1,8 @@
 <?php
 /**
- * Example to get retailers of the shops from a TrustedShopsID
+ * Example to get retailers of the shops from a TrustedShopsID.
  */
-include_once "../base.php";
+include_once '../base.php';
 
 /********************************
  Create the Trustedshops object
@@ -18,4 +18,4 @@ $retailers = $ts_restricted->get('retailers/shops');
 
 ?>
 
-<?= renderResponse('Get Retailers from a TrustedShops ID', $retailers); ?>
+<?php echo renderResponse('Get Retailers from a TrustedShops ID', $retailers); ?>

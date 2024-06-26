@@ -1,8 +1,8 @@
 <?php
 /**
- * Example to get all shops from a TrustedShopsID
+ * Example to get all shops from a TrustedShopsID.
  */
-include_once "../base.php";
+include_once '../base.php';
 
 /********************************
  Create the Trustedshops object
@@ -19,4 +19,4 @@ $shops = $ts_public->get('shops/'.$envs['TRUSTEDSHOPS_ID']);
 
 ?>
 
-<?= renderResponse('Get Shops with the TrustedShops ID', $shops); ?>
+<?php echo renderResponse('Get Shops with the TrustedShops ID', $shops); ?>

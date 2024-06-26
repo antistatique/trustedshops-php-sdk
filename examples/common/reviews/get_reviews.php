@@ -1,8 +1,8 @@
 <?php
 /**
- * Example to get all reviews from a TrustedShopsID
+ * Example to get all reviews from a TrustedShopsID.
  */
-include_once "../base.php";
+include_once '../base.php';
 
 /********************************
  Create the Trustedshops object
@@ -18,4 +18,4 @@ $reviews = $ts_public->get('shops/'.$envs['TRUSTEDSHOPS_ID'].'/reviews');
 
 ?>
 
-<?= renderResponse('Get Reviews from a TrustedShops ID', $reviews); ?>
+<?php echo renderResponse('Get Reviews from a TrustedShops ID', $reviews); ?>

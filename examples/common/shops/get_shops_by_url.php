@@ -1,8 +1,8 @@
 <?php
 /**
- * Example to get all shops from an url
+ * Example to get all shops from an url.
  */
-include_once "../base.php";
+include_once '../base.php';
 
 /********************************
  Create the Trustedshops object
@@ -17,4 +17,4 @@ $shops = $ts_public->get('shops', ['url' => 'demoshop.trustedshops.com']);
 
 ?>
 
-<?= renderResponse('Get Shops from an URL', $shops); ?>
+<?php echo renderResponse('Get Shops from an URL', $shops); ?>
