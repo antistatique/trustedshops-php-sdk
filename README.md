@@ -47,7 +47,7 @@ use \Antistatique\TrustedShops\TrustedShops;
 $tsid = 'abc123abc123abc123abc123abc123';
 $ts = new TrustedShops();
 $response = $ts->get("shops/$tsid");
-print_r($result);
+print_r($response);
 ```
 
 ### Get all reviews (with a `public` call via `get` to the `lists/{listID}/reviews` method)
@@ -56,7 +56,7 @@ print_r($result);
 $tsid = 'abc123abc123abc123abc123abc123';
 $ts = new TrustedShops();
 $response = $ts->get("shops/$tsid/reviews");
-print_r($result);
+print_r($response);
 ```
 
 ### Read measurement matrix of review complaint indicator for a shop (with a `restricted` authenticated call via `get` on the `shops/{tsid}/quality/complaints` method)
@@ -68,7 +68,7 @@ $tsid = 'abc123abc123abc123abc123abc123';
 $ts = new TrustedShops('restricted');
 $ts->setApiCredentials( 'SECRET_USER', 'SECRET_PASSWORD');
 $response = $ts->get("shops/$tsid/quality/complaints");
-print_r($result);
+print_r($response);
 ```
 
 Troubleshooting
