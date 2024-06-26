@@ -10,8 +10,6 @@ updates:
     versioning-strategy: lockfile-only
     allow:
       - dependency-type: production
-    registries:
-      - composer
     schedule:
       interval: weekly
   - package-ecosystem: "github-actions"
