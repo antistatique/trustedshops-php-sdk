@@ -105,8 +105,8 @@ class TrustedShops
      */
     public function __construct(?string $api_scoop = null, ?string $api_version = null, ?string $api_dc = null)
     {
-        if (!function_exists('curl_init') || !function_exists('curl_setopt')) {
-            throw new RuntimeException("cURL support is required, but can't be found.");
+        if (!$this->isCurlAvailable()) {
+            throw new \RuntimeException("cURL support is required, but can't be found.");
         }
 
         if (null !== $api_scoop) {
@@ -129,6 +129,14 @@ class TrustedShops
         // Build the concrete api endpoint.
         $this->setEndpoint($this->api_dc, $this->api_scoop, $this->api_version);
         $this->last_response = ['headers' => null, 'body' => null];
+    }
+
+    /**
+     * Check if cURL is available.
+     */
+    public function isCurlAvailable(): bool
+    {
+        return function_exists('curl_init') || function_exists('curl_setopt');
     }
 
     /**

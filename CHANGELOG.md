@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add Psalm linter
 - add .editorconfig file
 - add coveralls phpunit coverage upload
+- add coverage on cURL availability tests
 
 ### Security
 - ugprade phpunit/phpunit 7.x => 8.x
