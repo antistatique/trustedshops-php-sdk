@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - ugprade phpunit/phpunit 7.x => 8.x
 
+### Removed
+- remove StyleCI in favor of Github Actions
+
 ## 1.0.0 - 2019-10-08
 ### Changed
 - refactoring of testing strategy
