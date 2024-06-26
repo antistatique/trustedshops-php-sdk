@@ -1,23 +1,22 @@
 <?php
 /**
- * Index file for the examples of the SDK
+ * Index file for the examples of the SDK.
  */
-
 \error_reporting(E_ALL);
 
-include_once "templates/base.php";
+include_once 'templates/base.php';
 ?>
 
-<?php if (!isWebRequest()): ?>
+<?php if (!isWebRequest()) { ?>
   To view this example, run the following command from the root directory of this repository:
 
     php -S localhost:8000 -t examples/
 
   And then browse to "localhost:8000" in your web browser
-<?php return ?>
-<?php endif ?>
+<?php return; ?>
+<?php } ?>
 
-<?= pageHeader("TrustedShops API SDK Examples"); ?>
+<?php echo pageHeader('TrustedShops API SDK Examples'); ?>
 
 <h2>Common API</h2>
 
@@ -47,4 +46,4 @@ include_once "templates/base.php";
   <li><a href="restricted/trigger/post_reviews_trigger.php">Trigger a Review from a TrustedShopsID Example</a></li>
 </ul>
 
-<?= pageFooter(); ?>
+<?php echo pageFooter(); ?>

@@ -1,8 +1,8 @@
 <?php
 /**
- * Example to get all quality indicators for a shop from a TrustedShopsID
+ * Example to get all quality indicators for a shop from a TrustedShopsID.
  */
-include_once "../base.php";
+include_once '../base.php';
 
 /********************************
  Create the Trustedshops object
@@ -19,4 +19,4 @@ $quality_indicators = $ts_public->get('shops/'.$envs['TRUSTEDSHOPS_ID'].'/qualit
 
 ?>
 
-<?= renderResponse('Get Quality Indicators from a TrustedShops ID', $quality_indicators); ?>
+<?php echo renderResponse('Get Quality Indicators from a TrustedShops ID', $quality_indicators); ?>

@@ -1,8 +1,8 @@
 <?php
 /**
- * Example to get shops from a TrustedShopsID
+ * Example to get shops from a TrustedShopsID.
  */
-include_once "../base.php";
+include_once '../base.php';
 
 /********************************
  Create the Trustedshops object
@@ -47,4 +47,4 @@ $review = $ts_restricted->post('shops/'.$envs['TRUSTEDSHOPS_ID'].'/reviews/trigg
 
 ?>
 
-<?= renderResponse('Trigger a Review from a TrustedShopsID ', $review); ?>
+<?php echo renderResponse('Trigger a Review from a TrustedShopsID ', $review); ?>
