@@ -12,10 +12,10 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
           tools: php-cs-fixer, cs2pr
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: composer install --prefer-dist
       - run: ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --using-cache=no --format=checkstyle | cs2pr
 
@@ -26,9 +26,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: composer install --prefer-dist
       - run: ./vendor/bin/phpmd ./ text ./phpmd.xml --suffixes php,inc,test --exclude vendor,bin,tests,examples
 
@@ -39,9 +39,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: composer install --prefer-dist
       - run: ./vendor/bin/psalm --output-format=github
 
@@ -54,6 +54,6 @@ jobs:
 #        with:
 #          php-version: '7.4'
 #          tools: composer:v2
-#      - uses: actions/checkout@v2
+#      - uses: actions/checkout@v4
 #      - run: composer install --prefer-dist
 #      - uses: symfonycorp/security-checker-action@v3

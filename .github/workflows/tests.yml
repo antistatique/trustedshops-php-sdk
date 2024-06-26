@@ -13,7 +13,7 @@ jobs:
       TRUSTEDSHOPS_TSID: ${{ secrets.TRUSTEDSHOPS_TSID }}
     strategy:
       matrix:
-        php-versions: ['7.4']
+        php-versions: ['8.0', '8.1', '8.2', '8.3']
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

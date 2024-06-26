@@ -289,6 +289,7 @@ class TrustedShopsTest extends RequestTestBase
      */
     public function testSetResponseState()
     {
+        $curl = curl_init();
         $response = json_decode(file_get_contents(__DIR__.'/assets/responses/shops.json'), true);
         $response_content = file_get_contents(__DIR__.'/assets/responses/partials/body.txt');
 
@@ -298,8 +299,8 @@ class TrustedShopsTest extends RequestTestBase
         $this->assertEmpty($response['body']);
 
         $response = $this->callPrivateMethod($this->ts_public, 'setResponseState', [
-      $response, $response_content, null,
-    ]);
+          $response, $response_content, $curl,
+        ]);
 
         $this->assertArrayHasKey('httpHeaders', $response);
         $this->assertArrayHasKey('body', $response);
@@ -322,6 +323,7 @@ class TrustedShopsTest extends RequestTestBase
      */
     public function testSetResponseStateError()
     {
+        $curl = curl_init();
         $curl_error_mock = $this->getFunctionMock('Antistatique\TrustedShops', 'curl_error');
         $curl_error_mock->expects($this->once())
           ->willReturn('Something went wrong.');
@@ -329,7 +331,7 @@ class TrustedShopsTest extends RequestTestBase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Something went wrong.');
         $this->callPrivateMethod($this->ts_public, 'setResponseState', [
-          [], false, null,
+          [], false, $curl,
         ]);
     }
 
