@@ -1,16 +1,26 @@
-CHANGELOG
----------
+# Changelog
+All notable changes to this project will be documented in this file.
 
-## 1.0.0 (2019-10-08)
- - Initial release
-    - Refactoring of testing strategy
-    - Improve code coverage to ensure stability and sustainability
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.0.1-alpha (2019-09-27)
- - Alpha release
-    - Allow GET, POST, PUT, PATCH & DELETE operation on the TrustedShops API
-    - Allow Public and Restricted API calls
-    - Expose an option to change the Base URL from Production to Test/QA environment
+## [Unreleased]
+### Added
+- add Github Actions integration
 
-## 0.0.0 (2019-09-09)
- - Under heavy development
+## 1.0.0 - 2019-10-08
+### Changed
+- refactoring of testing strategy
+- improve code coverage to ensure stability and sustainability
+
+## 0.0.1-alpha - 2019-09-27
+### Added
+- allow GET, POST, PUT, PATCH & DELETE operation on the TrustedShops API
+- allow Public and Restricted API calls
+- expose an option to change the Base URL from Production to Test/QA environment
+
+## 0.0.0 - 2019-09-09
+### Added
+- under heavy development
+
+[Unreleased]: https://github.com/antistatique/trustedshops-php-sdk/compare/1.0.0...HEAD
