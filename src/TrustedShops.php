@@ -73,43 +73,37 @@ class TrustedShops
      *
      * Read before disabling:
      * http://snippets.webaware.com.au/howto/stop-turning-off-curlopt_ssl_verifypeer-and-fix-your-php-config/
-     *
-     * @var bool
      */
-    public $verify_ssl = true;
+    public bool $verify_ssl = true;
 
-    private $request_successful = false;
-    private $last_error = '';
-    private $last_response = [];
-    private $last_request = [];
+    private bool $request_successful = false;
+    private string $last_error = '';
+    private array $last_response = [];
+    private array $last_request = [];
 
     /**
      * The API username credentials.
-     *
-     * @var string
      */
-    private $api_credentials_user;
+    private ?string $api_credentials_user = null;
 
     /**
      * The API password credentials.
-     *
-     * @var string
      */
-    private $api_credentials_pass;
+    private ?string $api_credentials_pass = null;
 
     /**
      * Create a new instance.
      *
-     * @param string $api_scoop
+     * @param ?string $api_scoop
      *   The API range of call to be used
-     * @param string $api_version
+     * @param ?string $api_version
      *   The API version you use
-     * @param string $api_dc
+     * @param ?string $api_dc
      *   The API dc of call to be used
      *
      * @throws \Exception
      */
-    public function __construct($api_scoop = null, $api_version = null, $api_dc = null)
+    public function __construct(?string $api_scoop = null, ?string $api_version = null, ?string $api_dc = null)
     {
         if (!function_exists('curl_init') || !function_exists('curl_setopt')) {
             throw new RuntimeException("cURL support is required, but can't be found.");
@@ -140,17 +134,17 @@ class TrustedShops
     /**
      * Set the concrete API endpoint.
      *
-     * @param string $api_dc
+     * @param ?string $api_dc
      *   The API dc of call to be used
-     * @param string $api_scoop
+     * @param ?string $api_scoop
      *   The API range of call to be used
-     * @param string $api_version
+     * @param ?string $api_version
      *   The API version you use
      *
      * @return string
      *   The endpoint url
      */
-    public function setEndpoint($api_dc = null, $api_scoop = null, $api_version = null)
+    public function setEndpoint(?string $api_dc = null, ?string $api_scoop = null, ?string $api_version = null): string
     {
         if (null !== $api_dc) {
             $this->api_dc = $api_dc;
@@ -180,7 +174,7 @@ class TrustedShops
      * @return string
      *   The endpoint url
      */
-    public function getApiEndpoint()
+    public function getApiEndpoint(): string
     {
         return $this->api_endpoint;
     }
@@ -194,7 +188,7 @@ class TrustedShops
      * @param string $password
      *   The TrustedShops password authorized for restricted API calls
      */
-    public function setApiCredentials($username, $password)
+    public function setApiCredentials(string $username, string $password): void
     {
         $this->api_credentials_user = $username;
         $this->api_credentials_pass = $password;
@@ -206,7 +200,7 @@ class TrustedShops
      * @return bool
      *    True for success, FALSE for failure
      */
-    public function success()
+    public function success(): bool
     {
         return $this->request_successful;
     }
@@ -230,7 +224,7 @@ class TrustedShops
      * @return array
      *    Assoc array with keys 'headers' and 'body'
      */
-    public function getLastResponse()
+    public function getLastResponse(): array
     {
         return $this->last_response;
     }
@@ -241,7 +235,7 @@ class TrustedShops
      * @return array
      *    Assoc array
      */
-    public function getLastRequest()
+    public function getLastRequest(): array
     {
         return $this->last_request;
     }
@@ -261,7 +255,7 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    public function delete($method, $args = [], $timeout = self::TIMEOUT)
+    public function delete(string $method, array $args = [], int $timeout = self::TIMEOUT)
     {
         return $this->makeRequest('delete', $method, $args, $timeout);
     }
@@ -281,7 +275,7 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    public function get($method, $args = [], $timeout = self::TIMEOUT)
+    public function get(string $method, array $args = [], int $timeout = self::TIMEOUT)
     {
         return $this->makeRequest('get', $method, $args, $timeout);
     }
@@ -301,7 +295,7 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    public function patch($method, $args = [], $timeout = self::TIMEOUT)
+    public function patch(string $method, array $args = [], int $timeout = self::TIMEOUT)
     {
         return $this->makeRequest('patch', $method, $args, $timeout);
     }
@@ -321,7 +315,7 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    public function post($method, $args = [], $timeout = self::TIMEOUT)
+    public function post(string $method, array $args = [], int $timeout = self::TIMEOUT)
     {
         return $this->makeRequest('post', $method, $args, $timeout);
     }
@@ -341,7 +335,7 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    public function put($method, $args = [], $timeout = self::TIMEOUT)
+    public function put(string $method, array $args = [], int $timeout = self::TIMEOUT)
     {
         return $this->makeRequest('put', $method, $args, $timeout);
     }
@@ -363,21 +357,21 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    protected function makeRequest($http_verb, $method, $args = [], $timeout = self::TIMEOUT)
+    protected function makeRequest(string $http_verb, string $method, array $args = [], int $timeout = self::TIMEOUT)
     {
         $url = $this->api_endpoint.'/'.$method;
 
         $response = $this->prepareStateForRequest($http_verb, $method, $url, $timeout);
 
         $httpHeader = [
-      'Accept: application/json',
-      'Content-Type: application/json',
-      // TrustedShops needs the X-Requested-With header to works properly.
-      'X-Requested-With: XMLHttpRequest',
-    ];
+          'Accept: application/json',
+          'Content-Type: application/json',
+          // TrustedShops needs the X-Requested-With header to works properly.
+          'X-Requested-With: XMLHttpRequest',
+        ];
 
         if (isset($args['language'])) {
-            $httpHeader[] = 'Accept-Language: '.$args['language'];
+            $httpHeader[] = 'Accept-Language: '.(string) $args['language'];
         }
 
         if ('put' === $http_verb) {
@@ -429,15 +423,21 @@ class TrustedShops
     }
 
         $response_content = curl_exec($curl);
-        $response['headers'] = curl_getinfo($curl);
+        /** @var array|false $curl_info */
+        $curl_info = curl_getinfo($curl);
+        $response['headers'] = $curl_info;
         $response = $this->setResponseState($response, $response_content, $curl);
         $formattedResponse = $this->formatResponse($response);
 
         curl_close($curl);
 
-        $isSuccess = $this->determineSuccess($response, $formattedResponse['response'], $timeout);
+        if (isset($formattedResponse['response']) && is_array($formattedResponse['response'])) {
+            $this->determineSuccess($response, $formattedResponse['response'], $timeout);
 
-        return is_array($formattedResponse['response']) ? $formattedResponse['response'] : $isSuccess;
+            return $formattedResponse['response'];
+        }
+
+        return $this->determineSuccess($response, false, $timeout);
     }
 
     /**
@@ -445,32 +445,30 @@ class TrustedShops
      *    The HTTP verb to use: get, post, put, patch, delete
      * @param string $method
      *    The API method to be called
-     * @param array $args
-     *    Assoc array of parameters to be passed
+     * @param string $url
+     *    The URL
      * @param int $timeout
      *    Timeout limit for request in seconds
-     *
-     * @return array
      */
-    protected function prepareStateForRequest($http_verb, $method, $url, $timeout)
+    protected function prepareStateForRequest(string $http_verb, string $method, string $url, int $timeout): array
     {
         $this->last_error = '';
 
         $this->request_successful = false;
 
         $this->last_response = [
-      'headers' => null, // array of details from curl_getinfo().
-      'httpHeaders' => null, // array of HTTP headers.
-      'body' => null, // content of the response.
-    ];
+          'headers' => null, // array of details from curl_getinfo().
+          'httpHeaders' => null, // array of HTTP headers.
+          'body' => null, // content of the response.
+        ];
 
         $this->last_request = [
-      'method' => $http_verb,
-      'path' => $method,
-      'url' => $url,
-      'body' => '',
-      'timeout' => $timeout,
-    ];
+          'method' => $http_verb,
+          'path' => $method,
+          'url' => $url,
+          'body' => '',
+          'timeout' => $timeout,
+        ];
 
         return $this->last_response;
     }
@@ -484,11 +482,11 @@ class TrustedShops
      * @return array
      *   The parsed headers
      */
-    protected function getHeadersAsArray($headersAsString)
+    protected function getHeadersAsArray(string $headersAsString): array
     {
         $headers = [];
 
-        foreach (explode(PHP_EOL, $headersAsString) as $i => $line) {
+        foreach (explode(PHP_EOL, $headersAsString) as $line) {
             if (1 === preg_match('/HTTP\/[1-2]/', substr($line, 0, 7))) { // http code
                 continue;
             }
@@ -513,7 +511,7 @@ class TrustedShops
      * @param array $data
      *    Assoc array of data to attach
      */
-    protected function attachRequestPayload(&$curl, $data)
+    protected function attachRequestPayload(&$curl, array $data): void
     {
         $encoded = json_encode($data);
         $this->last_request['body'] = $encoded;
@@ -529,17 +527,20 @@ class TrustedShops
      * @return array|false
      *    A decoded array from JSON response
      */
-    protected function formatResponse($response)
+    protected function formatResponse(array $response)
     {
         $this->last_response = $response;
 
-        if (empty($response['body'])) {
+        if (empty($response['body']) || !is_string($response['body'])) {
             return false;
         }
 
-        // Return the decoded response from JSON when reponse is a valid json.
+        // Return the decoded response from JSON when response is a valid json.
         // Will return FALSE otherwise.
-        return ($result = json_decode($response['body'], true)) ? $result : false;
+        /** @var array|null $result */
+        $result = json_decode($response['body'], true);
+
+        return $result ?? false;
     }
 
     /**
@@ -547,7 +548,7 @@ class TrustedShops
      *
      * @param array $response
      *    The response from the curl request
-     * @param string $response_content
+     * @param string|bool $response_content
      *    The body of the response from the curl request
      * @param resource $curl
      *    The curl resource
@@ -557,13 +558,13 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    protected function setResponseState($response, $response_content, $curl)
+    protected function setResponseState(array $response, $response_content, $curl): array
     {
         if (false === $response_content) {
             $this->last_error = curl_error($curl);
             throw new Exception($this->last_error);
-        } else {
-            $headerSize = $response['headers']['header_size'];
+        } elseif (is_string($response_content)) {
+            $headerSize = isset($response['headers']['header_size']) ? (int) $response['headers']['header_size'] : 0;
 
             $response['httpHeaders'] = $this->getHeadersAsArray(substr($response_content, 0, $headerSize));
             $response['body'] = substr($response_content, $headerSize);
@@ -591,7 +592,7 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    protected function determineSuccess($response, $formattedResponse, $timeout)
+    protected function determineSuccess(array $response, $formattedResponse, int $timeout): bool
     {
         $status = $this->findHTTPStatus($response, $formattedResponse);
 
@@ -602,12 +603,12 @@ class TrustedShops
         }
 
         if (isset($formattedResponse['message'])) {
-            $this->last_error = sprintf('%s %d: %s', $formattedResponse['status'], $formattedResponse['code'], $formattedResponse['message']);
+            $this->last_error = sprintf('%s %d: %s', (string) $formattedResponse['status'], (int) $formattedResponse['code'], (string) $formattedResponse['message']);
             throw new Exception($this->last_error);
         }
 
-        if ($timeout > 0 && $response['headers'] && $response['headers']['total_time'] >= $timeout) {
-            $this->last_error = sprintf('Request timed out after %f seconds.', $response['headers']['total_time']);
+        if (isset($response['headers']['total_time']) && $timeout > 0 && $response['headers']['total_time'] >= $timeout) {
+            $this->last_error = sprintf('Request timed out after %f seconds.', (float) $response['headers']['total_time']);
             throw new Exception($this->last_error);
         }
 
@@ -626,7 +627,7 @@ class TrustedShops
      * @return int
      *    HTTP status code
      */
-    protected function findHTTPStatus($response, $formattedResponse)
+    protected function findHTTPStatus(array $response, $formattedResponse): int
     {
         if (!empty($response['headers']) && isset($response['headers']['http_code'])) {
             return (int) $response['headers']['http_code'];

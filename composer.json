@@ -3,7 +3,7 @@
   "description": "Super-simple, minimum abstraction TrustedShops API v2.x wrapper, in PHP",
   "license": "MIT",
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.4",
     "ext-curl": "*",
     "ext-json": "*"
   },
@@ -14,7 +14,8 @@
     "friendsofphp/php-cs-fixer": "^2.12",
     "phpmd/phpmd": "^2.6",
     "php-coveralls/php-coveralls": "^2.1",
-    "php-mock/php-mock-phpunit": "^2.4"
+    "php-mock/php-mock-phpunit": "^2.4",
+    "vimeo/psalm": "^4.30"
   },
   "autoload": {
     "psr-4": {
