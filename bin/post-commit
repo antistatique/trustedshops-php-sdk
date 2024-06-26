@@ -4,8 +4,5 @@ echo "\n🚔  \033[0;32mRunning Code Sniffer Symfony for /public ...\033[0m"
 echo "\n💩  \033[0;32mRunning PHP Mess Detector ...\033[0m"
 ./vendor/bin/phpmd ./ text ./phpmd.xml --suffixes php,inc,test --exclude vendor,bin,var,tests,node_modules,DataFixtures,Migrations
 
-echo "\n🛂  \033[0;32mRunning PHP Copy/Paste Detector ...\033[0m"
-./vendor/bin/phpcpd ./ --names=*.php,*.inc,*.test --names-exclude=*.md --ansi --exclude=vendor --exclude=bin --exclude=var --exclude=tests --exclude=node_modules
-
 echo "\n⛔  \033[0;32mRunning SensioLabs Security Checker ...\033[0m"
 ./vendor/bin/security-checker security:check ./composer.lock

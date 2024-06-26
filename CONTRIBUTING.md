@@ -20,18 +20,18 @@ There are a small number of PHPUnit unit tests. To get up and running, copy `.en
 
 You need to run composer before using [FriendsOfPHP/PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
 
-### Command Line Usage
+### Ensure PHP Community Best Practicies using PHP Coding Standards Fixer
 
-Check & Fix Symfony 4 coding standards:
+It can modernize your code (like converting the pow function to the ** operator on PHP 5.6) and (micro) optimize it.
 
 ```bash
-./vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no
+./vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle
 ```
 
-Automatically fix coding standards
+### Attempts to dig into your program and find as many type-related bugs as possiblevia Psalm
 
 ```bash
-./vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --using-cache=no
+./vendor/bin/psalm
 ```
 
 ### Asserts Security Vulnerabilities
@@ -43,18 +43,12 @@ if the application uses dependencies with known security vulnerabilitie.
 ./vendor/bin/security-checker security:check ./composer.lock
 ```
 
-### Improve global code quality using PHPCPD (Code duplication) &  PHPMD (PHP Mess Detector)
+### Improve global code quality using PHPMD (PHP Mess Detector)
 
 Detect overcomplicated expressions & Unused parameters, methods, properties
 
 ```bash
-./vendor/bin/phpmd ./web/modules/custom text ./phpmd.xml
-```
-
-Copy/Paste Detector
-
-```bash
-./vendor/bin/phpcpd ./web/modules/custom
+./vendor/bin/phpmd ./ text ./phpmd.xml --suffixes php,inc,test --exclude vendor,bin,tests
 ```
 
 ### Enforce code standards with git hooks
