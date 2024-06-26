@@ -13,7 +13,7 @@ class QualityComplaintsTest extends RequestTestBase
     /**
      * {@inheritDoc}
      */
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 
@@ -79,26 +79,26 @@ class QualityComplaintsTest extends RequestTestBase
         /** @var array $response */
         $response = $this->ts_restricted->get('shops/'.$TRUSTEDSHOPS_TSID.'/quality/complaints');
 
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertTrue($this->ts_restricted->success());
         $this->assertFalse($this->ts_restricted->getLastError());
 
         $this->assertSame(
-      ['headers', 'httpHeaders', 'body'],
-      array_keys($this->ts_restricted->getLastResponse())
-    );
+          ['headers', 'httpHeaders', 'body'],
+          array_keys($this->ts_restricted->getLastResponse())
+        );
 
         $this->assertSame(
       ['method', 'path', 'url', 'body', 'timeout', 'headers'],
-      array_keys($this->ts_restricted->getLastRequest())
-    );
+          array_keys($this->ts_restricted->getLastRequest())
+        );
 
-        $this->assertInternalType('string', $response['data']['shop']['url']);
+        $this->assertIsString($response['data']['shop']['url']);
         $this->assertEquals('demoshop.trustedshops.com/fr/home', $response['data']['shop']['url']);
 
         $this->assertSame(
-      ['totalComplaintCount', 'activeComplaintCount'],
-      array_keys((array) $response['data']['shop']['qualityIndicators']['complaintIndicator'])
-    );
+          ['totalComplaintCount', 'activeComplaintCount'],
+          array_keys((array) $response['data']['shop']['qualityIndicators']['complaintIndicator'])
+        );
     }
 }

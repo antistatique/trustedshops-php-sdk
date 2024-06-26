@@ -41,18 +41,18 @@ class ShopsTest extends RequestTestBase
         /** @var array $response */
         $response = $this->ts_public->get('shops/'.$TRUSTEDSHOPS_TSID);
 
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertTrue($this->ts_public->success());
         $this->assertFalse($this->ts_public->getLastError());
 
         $this->assertSame(
-      ['headers', 'httpHeaders', 'body'],
-      array_keys($this->ts_public->getLastResponse())
-    );
+          ['headers', 'httpHeaders', 'body'],
+          array_keys($this->ts_public->getLastResponse())
+        );
 
         $this->assertSame(
-      ['method', 'path', 'url', 'body', 'timeout', 'headers'],
-      array_keys($this->ts_public->getLastRequest())
-    );
+          ['method', 'path', 'url', 'body', 'timeout', 'headers'],
+          array_keys($this->ts_public->getLastRequest())
+        );
     }
 }

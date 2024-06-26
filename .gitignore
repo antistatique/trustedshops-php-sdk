@@ -13,3 +13,4 @@
 # Ignore log & cache files
 .php-cs-fixer.cache
 .php_cs.cache
+.phpunit.result.cache

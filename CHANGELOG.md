@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add Github Actions integration
 - add Psalm linter
 
+### Security
+- ugprade phpunit/phpunit 7.x => 8.x
+
 ## 1.0.0 - 2019-10-08
 ### Changed
 - refactoring of testing strategy
