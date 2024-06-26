@@ -11,12 +11,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add .editorconfig file
 - add coveralls phpunit coverage upload
 - add coverage on cURL availability tests
+- add support for PHP 8.0, 8.1 & 8.2
+- add security-checker on Github Actions
 
 ### Security
 - ugprade phpunit/phpunit 7.x => 8.x
+- update phpmd/phpmd (2.7.0 => 2.15.0)
+- guzzlehttp/guzzle (6.3.3 => 7.8.1)
+- symfony/dotenv (v4.3.4 => v4.4.37)
+- guzzlehttp/psr7 (1.6.1 => 2.6.2)
+- upgrade friendsofphp/php-cs-fixer (v2.19.3 => v3.4.0)
+- upgrade phpunit/phpunit 8.x -> 9.x
 
 ### Removed
 - remove StyleCI in favor of Github Actions
+- drop support for PHP 7.4 and below
 
 ## 1.0.0 - 2019-10-08
 ### Changed

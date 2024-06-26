@@ -2,6 +2,7 @@
 
 namespace Antistatique\TrustedShops;
 
+use CurlHandle;
 use Exception;
 use RuntimeException;
 
@@ -19,14 +20,14 @@ class TrustedShops
      *
      * @var int
      */
-    const TIMEOUT = 10;
+    public const TIMEOUT = 10;
 
     /**
      * TrustedShops allowed API scoop.
      *
      * @var string[]
      */
-    const ALLOWED_SCOOP = [
+    public const ALLOWED_SCOOP = [
     'public',
     'restricted',
   ];
@@ -36,7 +37,7 @@ class TrustedShops
      *
      * @var string
      */
-    const BASE_URL = 'https://<dc>.trustedshops.com/rest/<scoop>/<version>';
+    public const BASE_URL = 'https://<dc>.trustedshops.com/rest/<scoop>/<version>';
 
     /**
      * The API dc used.
@@ -106,7 +107,7 @@ class TrustedShops
     public function __construct(?string $api_scoop = null, ?string $api_version = null, ?string $api_dc = null)
     {
         if (!$this->isCurlAvailable()) {
-            throw new \RuntimeException("cURL support is required, but can't be found.");
+            throw new RuntimeException("cURL support is required, but can't be found.");
         }
 
         if (null !== $api_scoop) {
@@ -514,12 +515,12 @@ class TrustedShops
     /**
      * Encode the data and attach it to the request.
      *
-     * @param resource $curl
+     * @param CurlHandle $curl
      *    cURL session handle, used by reference
      * @param array $data
      *    Assoc array of data to attach
      */
-    protected function attachRequestPayload(&$curl, array $data): void
+    protected function attachRequestPayload(CurlHandle &$curl, array $data): void
     {
         $encoded = json_encode($data);
         $this->last_request['body'] = $encoded;
@@ -558,7 +559,7 @@ class TrustedShops
      *    The response from the curl request
      * @param string|bool $response_content
      *    The body of the response from the curl request
-     * @param resource $curl
+     * @param CurlHandle $curl
      *    The curl resource
      *
      * @return array
@@ -566,7 +567,7 @@ class TrustedShops
      *
      * @throws \Exception
      */
-    protected function setResponseState(array $response, $response_content, $curl): array
+    protected function setResponseState(array $response, string|bool $response_content, CurlHandle $curl): array
     {
         if (false === $response_content) {
             $this->last_error = curl_error($curl);
