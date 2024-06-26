@@ -29,6 +29,8 @@ abstract class RequestTestBase extends TestCase
      */
     public function setup(): void
     {
+        parent::setUp();
+
         $TRUSTEDSHOPS_TSID = getenv('TRUSTEDSHOPS_TSID');
         $this->assertNotEmpty($TRUSTEDSHOPS_TSID, 'No environment variables! Copy .env.example -> .env and fill out your TrustedShops account details.');
 

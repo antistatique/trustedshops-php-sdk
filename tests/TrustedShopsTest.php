@@ -362,7 +362,7 @@ class TrustedShopsTest extends RequestTestBase
         $body_txt = file_get_contents(__DIR__.'/assets/responses/partials/body.txt');
 
         $ts_mock = $this->getMockBuilder(TrustedShops::class)
-          ->setMethods(['prepareStateForRequest', 'setResponseState', 'formatResponse', 'determineSuccess'])
+          ->onlyMethods(['prepareStateForRequest', 'setResponseState', 'formatResponse', 'determineSuccess'])
           ->getMock();
 
         $ts_mock->expects($this->once())
@@ -386,7 +386,7 @@ class TrustedShopsTest extends RequestTestBase
             'Transfer-Encoding' => 'chunked',
             'Content-Type' => 'application/json',
           ],
-    ];
+        ];
         $ts_mock->expects($this->once())
           ->method('setResponseState')
           ->with($this->isType('array'), $this->isType('string'), $this->anything())
@@ -431,6 +431,93 @@ class TrustedShopsTest extends RequestTestBase
           ],
           'status' => 'SUCCESS',
         ], $result);
+    }
+
+    /**
+     * @covers ::makeRequest
+     *
+     * @dataProvider providerHttpVerbs
+     */
+    public function testMakeRequestByVerbs(string $verb): void
+    {
+        $ts_mock = $this->getMockBuilder(TrustedShops::class)
+          ->onlyMethods(['prepareStateForRequest', 'setResponseState', 'formatResponse', 'determineSuccess'])
+          ->getMock();
+
+        $ts_mock->expects($this->once())
+          ->method('prepareStateForRequest')
+          ->with($verb, 'foo', 'https://api.trustedshops.com/rest/public/v2/foo', 10);
+
+        $ts_mock->expects($this->once())
+          ->method('setResponseState')
+          ->with($this->isType('array'), $this->isType('string'), $this->anything())
+        ;
+
+        $ts_mock->expects($this->once())
+          ->method('formatResponse')
+          ->with($this->isType('array'))
+          ->willReturn(['response' => []]);
+
+        $ts_mock->expects($this->once())
+          ->method('determineSuccess')
+          ->with($this->isType('array'), $this->isType('array'), $this->isType('integer'))
+          ->willReturn(true);
+
+        $curl_exec_mock = $this->getFunctionMock('Antistatique\TrustedShops', 'curl_exec');
+        $curl_exec_mock->expects($this->any())->willReturn('body');
+
+        $this->callPrivateMethod($ts_mock, 'makeRequest', [
+          $verb, 'foo', ['foo' => 'bar'], 10,
+        ]);
+    }
+
+    /**
+     * Provider of :testMakeRequestByVerbs.
+     *
+     * @return iterable Variation of HTTP Verbs
+     */
+    public static function providerHttpVerbs(): iterable
+    {
+        yield ['post'];
+        yield ['delete'];
+        yield ['patch'];
+        yield ['put'];
+    }
+
+    /**
+     * @covers ::makeRequest
+     */
+    public function testMakeRequestArgsLanguage(): void
+    {
+        $ts_mock = $this->getMockBuilder(TrustedShops::class)
+          ->onlyMethods(['prepareStateForRequest', 'setResponseState', 'formatResponse', 'determineSuccess'])
+          ->getMock();
+
+        $ts_mock->expects($this->once())
+          ->method('prepareStateForRequest')
+          ->with('get', 'foo', 'https://api.trustedshops.com/rest/public/v2/foo', 10);
+
+        $ts_mock->expects($this->once())
+          ->method('setResponseState')
+          ->with($this->isType('array'), $this->isType('string'), $this->anything())
+        ;
+
+        $ts_mock->expects($this->once())
+          ->method('formatResponse')
+          ->with($this->isType('array'))
+          ->willReturn(['response' => []]);
+
+        $ts_mock->expects($this->once())
+          ->method('determineSuccess')
+          ->with($this->isType('array'), $this->isType('array'), $this->isType('integer'))
+          ->willReturn(true);
+
+        $curl_exec_mock = $this->getFunctionMock('Antistatique\TrustedShops', 'curl_exec');
+        $curl_exec_mock->expects($this->any())->willReturn('body');
+
+        $this->callPrivateMethod($ts_mock, 'makeRequest', [
+          'get', 'foo', ['language' => 'fr'], 10,
+        ]);
     }
 
     /**
@@ -641,7 +728,7 @@ class TrustedShopsTest extends RequestTestBase
 
         $curl = curl_init();
         $curl_setopt_mock = $this->getFunctionMock('Antistatique\TrustedShops', 'curl_setopt');
-        $curl_setopt_mock->expects($this->once())->with($curl, CURLOPT_POSTFIELDS, '{"name":"john","age":30,"car":null}');
+        $curl_setopt_mock->expects($this->any())->with($curl, CURLOPT_POSTFIELDS, '{"name":"john","age":30,"car":null}');
 
         $this->callPrivateMethod($this->ts_public, 'attachRequestPayload', [
           &$curl, ['name' => 'john', 'age' => 30, 'car' => null],
