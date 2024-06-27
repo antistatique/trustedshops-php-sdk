@@ -5,13 +5,11 @@ Super-simple, minimum abstraction TrustedShops API v2.x wrapper, in PHP.
 
 I hate complex wrappers. This lets you get from the TrustedShops API docs to the code as directly as possible.
 
-Requires PHP 7.0+. Abstraction is for chimps.
-
-[![Build Status](https://travis-ci.org/antistatique/trustedshops-php-sdk.svg?branch=master)](https://travis-ci.org/antistatique/trustedshops-php-sdk)
-[![StyleCI](https://github.styleci.io/repos/207270598/shield?branch=master)](https://github.styleci.io/repos/207270598)
+[![Build](https://github.com/antistatique/trustedshops-php-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/antistatique/trustedshops-php-sdk/actions/workflows/tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/antistatique/trustedshops-php-sdk/badge.svg?branch=master)](https://coveralls.io/github/antistatique/trustedshops-php-sdk?branch=master)
 [![Packagist](https://img.shields.io/packagist/dt/antistatique/trustedshops-php-sdk.svg?maxAge=2592000)](https://packagist.org/packages/antistatique/trustedshops-php-sdk)
 [![License](https://poser.pugx.org/antistatique/trustedshops-php-sdk/license)](https://packagist.org/packages/antistatique/trustedshops-php-sdk)
+[![PHP Versions Supported](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://packagist.org/packages/antistatique/trustedshops-php-sdk)
 
 Getting started
 ------------
@@ -25,6 +23,16 @@ composer require antistatique/trustedshops-php-sdk
 Examples
 --------
 
+See the `examples/` directory for examples of the key client features. You can view them in your browser by running the php built-in web server.
+
+```bash
+php -S localhost:8000 -t examples/
+```
+
+And then browsing to the host and port you specified (in the above example, `http://localhost:8000`).
+
+### Basic Example
+
 Start by `use`-ing the class and creating an instance with your API key
 
 ```php
@@ -37,7 +45,7 @@ use \Antistatique\TrustedShops\TrustedShops;
 $tsid = 'abc123abc123abc123abc123abc123';
 $ts = new TrustedShops();
 $response = $ts->get("shops/$tsid");
-print_r($result);
+print_r($response);
 ```
 
 ### Get all reviews (with a `public` call via `get` to the `lists/{listID}/reviews` method)
@@ -46,7 +54,7 @@ print_r($result);
 $tsid = 'abc123abc123abc123abc123abc123';
 $ts = new TrustedShops();
 $response = $ts->get("shops/$tsid/reviews");
-print_r($result);
+print_r($response);
 ```
 
 ### Read measurement matrix of review complaint indicator for a shop (with a `restricted` authenticated call via `get` on the `shops/{tsid}/quality/complaints` method)
@@ -58,7 +66,7 @@ $tsid = 'abc123abc123abc123abc123abc123';
 $ts = new TrustedShops('restricted');
 $ts->setApiCredentials( 'SECRET_USER', 'SECRET_PASSWORD');
 $response = $ts->get("shops/$tsid/quality/complaints");
-print_r($result);
+print_r($response);
 ```
 
 Troubleshooting
